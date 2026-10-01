@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nakshatra Family Restaurant</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: white;
+}
+
+header {
+    background: #17120b;
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    border-bottom: 2px solid #d4a017;
+    position: relative;
+    z-index: 10;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #f5c542;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.logo img {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #f5c542;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 8px;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #f5c542;
+}
+
+/* HERO SLIDESHOW STYLES */
+.hero {
+    position: relative;
+    min-height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+    overflow: hidden;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+    z-index: 1;
+}
+
+.hero-slide.active {
+    opacity: 1;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 2;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+}
+
+.hero h1 {
+    color: #f5c542;
+    font-size: clamp(35px, 7vw, 65px);
+    margin-bottom: 20px;
+    text-shadow: 2px 3px 5px black;
+}
+
+.hero p {
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+.btn {
+    display: inline-block;
+    background: #d4a017;
+    color: #111;
+    padding: 14px 24px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 8px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: white;
+    transform: translateY(-2px);
+}
+
+.green-btn {
+    background: #22a952;
+    color: white;
+}
+
+.green-btn:hover {
+    background: #19803d;
+}
+
+section {
+    padding: 65px 7%;
+}
+
+.section-title {
+    text-align: center;
+    color: #f5c542;
+    font-size: 34px;
+    margin-bottom: 35px;
+}
+
+.about {
+    text-align: center;
+    line-height: 1.9;
+    max-width: 900px;
+    margin: auto;
+}
+
+.menu-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.menu-controls button {
+    padding: 10px 18px;
+    background: #222;
+    color: white;
+    border: 1px solid #d4a017;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+.menu-controls button:hover,
+.menu-controls button.active {
+    background: #d4a017;
+    color: #111;
+    font-weight: bold;
+}
+
+.search {
+    display: block;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto 30px;
+    padding: 14px;
+    border-radius: 25px;
+    border: 1px solid #d4a017;
+    background: #222;
+    color: white;
+    outline: none;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+.food-card {
+    background: #1c1c1c;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid #333;
+    transition: 0.3s;
+}
+
+.food-card:hover {
+    transform: translateY(-6px);
+    border-color: #d4a017;
+}
+
+.food-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.food-info {
+    padding: 18px;
+}
+
+.food-info h3 {
+    color: #f5c542;
+    margin-bottom: 8px;
+    font-size: 18px;
+}
+
+.food-info p {
+    color: #ccc;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.price {
+    color: #f5c542;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.contact {
+    text-align: center;
+    line-height: 2;
+}
+
+.contact-box {
+    background: #1c1c1c;
+    border: 1px solid #d4a017;
+    border-radius: 18px;
+    padding: 30px 20px;
+    max-width: 700px;
+    margin: 25px auto 0;
+}
+
+.contact-box h3 {
+    color: #f5c542;
+    margin-bottom: 15px;
+}
+
+.contact-number {
+    color: #f5c542;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+footer {
+    background: #080808;
+    text-align: center;
+    padding: 25px;
+    color: #aaa;
+    border-top: 1px solid #d4a017;
+}
+
+/* MOBILE RESPONSIVE FIXES */
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+@media (max-width: 600px) {
+    header {
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+        padding: 12px 15px;
+    }
+
+    .logo {
+        justify-content: center;
+        flex-wrap: wrap;
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .logo img {
+        width: 55px;
+        height: 55px;
+    }
+
+    nav {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    nav a {
+        margin: 5px;
+        font-size: 14px;
+    }
+
+    section {
+        width: 100%;
+        padding: 45px 5%;
+    }
+
+    .hero {
+        width: 100%;
+        min-height: 75vh;
+    }
+
+    .hero h1 {
+        font-size: clamp(28px, 8vw, 45px);
+        overflow-wrap: break-word;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER / LOGO -->
+<header>
+    <div class="logo">
+        <img src="https://lh3.googleusercontent.com/grass-cs/ACvplmNINJXEboNv2Qs1gEyIzKJsYdB6yxytYj3iX6EzD9aBIzGs2sMANmFQcfEkD2tord_YrwWOK_htrn4BT5iAGy2WBnXm2PAe0NmZAEwjFoJGJctvdDgTQHhQ_f8ITrZVGO0LNBxZ5ryAtzmh=s260-w260-h208-n-k-no" alt="Nakshatra Restaurant Logo">
+        <span>⭐ NAKSHATRA</span>
+    </div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#menu">Menu</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<!-- HOME / HERO SLIDESHOW -->
+<section class="hero" id="home">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1>NAKSHATRA<br>FAMILY RESTAURANT</h1>
+
+        <p>
+            Delicious Food • Beautiful Moments • Family Dining
+        </p>
+
+        <a href="#menu" class="btn">
+            Explore Our Menu
+        </a>
+
+        <a href="https://maps.app.goo.gl/d9RiEvF7dceBHCd87?g_st=ac"
+           target="_blank"
+           rel="noopener"
+           class="btn">
+            📍 View Our Location
+        </a>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+    <h2 class="section-title">About Us</h2>
+
+    <div class="about">
+        <p>
+            Welcome to <strong>Nakshatra Family Restaurant</strong>!
+            Enjoy delicious authentic food, a comfortable atmosphere, and
+            memorable moments with your family and friends.
+            We look forward to serving you.
+        </p>
+    </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+    <h2 class="section-title">Our Special Menu</h2>
+
+    <input
+        class="search"
+        id="search"
+        type="text"
+        placeholder="🔍 Search food..."
+    >
+
+    <div class="menu-controls">
+        <button class="active" data-category="all">All</button>
+        <button data-category="thali">Meals & Thali</button>
+        <button data-category="starters">Starters</button>
+        <button data-category="biryani">Biryani</button>
+        <button data-category="friedrice">Fried Rice</button>
+        <button data-category="curries">Curries & Rotis</button>
+        <button data-category="beverages">Beverages</button>
+    </div>
+
+    <div class="menu-grid" id="menuGrid"></div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <h2 class="section-title">Contact & Location</h2>
+
+    <div class="contact">
+        <div class="contact-box">
+            <h3>Contact Person</h3>
+            <p>👤 Kirun</p>
+
+            <p>📞 Contact Number</p>
+
+            <a class="contact-number" href="tel:9848731254">
+                9848731254
+            </a>
+
+            <br>
+
+            <a href="tel:9848731254" class="btn">
+                📞 Call Now
+            </a>
+
+            <a href="https://wa.me/919848731254"
+               target="_blank"
+               rel="noopener"
+               class="btn green-btn">
+                💬 WhatsApp Us
+            </a>
+        </div>
+
+        <div class="contact-box">
+            <h3>Find Us on Google Maps</h3>
+
+            <p>
+                Visit Nakshatra Family Restaurant.
+            </p>
+
+            <a href="https://maps.app.goo.gl/d9RiEvF7dceBHCd87?g_st=ac"
+               target="_blank"
+               rel="noopener"
+               class="btn">
+                📍 Get Directions
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>
+        © 2026 Nakshatra Family Restaurant | All Rights Reserved
+    </p>
+    <p>Contact: Kirun | 9848731254</p>
+</footer>
+
+<!-- JAVASCRIPT -->
+<script>
+// SLIDESHOW IMAGES
+const heroImages = [
+    "https://lh3.googleusercontent.com/grass-cs/ACvplmNINJXEboNv2Qs1gEyIzKJsYdB6yxytYj3iX6EzD9aBIzGs2sMANmFQcfEkD2tord_YrwWOK_htrn4BT5iAGy2WBnXm2PAe0NmZAEwjFoJGJctvdDgTQHhQ_f8ITrZVGO0LNBxZ5ryAtzmh=s260-w260-h208-n-k-no",
+    "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?auto=format&fit=crop&w=1200&q=80"
+];
+
+// INITIALIZE HERO SLIDESHOW
+const heroSection = document.getElementById("home");
+heroImages.forEach((src, index) => {
+    const slide = document.createElement("div");
+    slide.className = `hero-slide ${index === 0 ? 'active' : ''}`;
+    slide.style.backgroundImage = `url('${src}')`;
+    heroSection.appendChild(slide);
+});
+
+let currentSlide = 0;
+setInterval(() => {
+    const slides = document.querySelectorAll(".hero-slide");
+    if (slides.length > 0) {
+        slides[currentSlide].classList.remove("active");
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add("active");
+    }
+}, 4000);
+
+// MENU DATA WITH INDIVIDUAL FOOD IMAGES
+const foods = [
+    // PAGE 1: MEALS & THALI
+    { name: "Meals (A/C)", category: "thali", price: "₹189", image: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80", description: "Traditional South Indian Veg Meals served in A/C." },
+    { name: "Meals (Non A/C)", category: "thali", price: "₹159", image: "https://images.unsplash.com/photo-1610192244261-3f33de3f55e4?auto=format&fit=crop&w=800&q=80", description: "Traditional South Indian Veg Meals." },
+    { name: "Curd Rice", category: "thali", price: "₹119", image: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=800&q=80", description: "Comforting creamy curd rice with mustard seasoning." },
+    { name: "Sambar Rice", category: "thali", price: "₹129", image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80", description: "Flavorful lentil and vegetable sambar rice." },
+    { name: "Omlet", category: "thali", price: "₹59", image: "https://images.unsplash.com/photo-1510693206972-df098062cb71?auto=format&fit=crop&w=800&q=80", description: "Classic fluffy spiced egg omelette." },
+    { name: "Omlet (Half Boiled)", category: "thali", price: "₹29", image: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80", description: "Soft half-boiled egg omelette with pepper." },
+    { name: "Rice Bowl", category: "thali", price: "₹80", image: "https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=800&q=80", description: "Freshly steamed white rice bowl." },
+    { name: "Curd", category: "thali", price: "₹20", image: "https://images.unsplash.com/photo-1571212515416-fef01fc43637?auto=format&fit=crop&w=800&q=80", description: "Fresh thick homemade curd." },
+
+    // PAGE 1: BEVERAGES
+    { name: "Lassi", category: "beverages", price: "₹39", image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80", description: "Refreshing sweet churned yogurt drink." },
+    { name: "Butter Milk", category: "beverages", price: "₹29", image: "https://images.unsplash.com/photo-1626078302253-3398c8c5040d?auto=format&fit=crop&w=800&q=80", description: "Spiced refreshing buttermilk with coriander." },
+    { name: "Cool Drinks", category: "beverages", price: "MRP", image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=800&q=80", description: "Chilled soft drinks." },
+
+    // PAGE 2: VEG STARTERS
+    { name: "Mushroom Salt / Pepper", category: "starters", price: "₹229", image: "https://images.unsplash.com/photo-1618449840665-9ed506d73a34?auto=format&fit=crop&w=800&q=80", description: "Crispy pepper-salted tossed mushrooms." },
+    { name: "Chilli Mushroom", category: "starters", price: "₹229", image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80", description: "Spicy garlic & chilli fried mushrooms." },
+    { name: "Mushroom 65", category: "starters", price: "₹239", image: "https://images.unsplash.com/photo-1604908177453-7462950a6a3b?auto=format&fit=crop&w=800&q=80", description: "Crispy South-Indian style fried mushroom 65." },
+    { name: "Chilli Paneer", category: "starters", price: "₹259", image: "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=800&q=80", description: "Wok-tossed paneer with chillies & capsicum." },
+    { name: "Paneer Manchurian", category: "starters", price: "₹259", image: "https://images.unsplash.com/photo-1541832676-9b763b0239ab?auto=format&fit=crop&w=800&q=80", description: "Crispy paneer cubes in Manchurian sauce." },
+    { name: "Baby Corn 65", category: "starters", price: "₹229", image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=800&q=80", description: "Deep-fried crispy spiced baby corn." },
+    { name: "Chilli Baby Corn", category: "starters", price: "₹229", image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80", description: "Stir-fried baby corn with hot green chillies." },
+    { name: "Baby Corn Manchurian", category: "starters", price: "₹229", image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80", description: "Indo-Chinese style crispy baby corn Manchurian." },
+    { name: "Crispy Baby Corn", category: "starters", price: "₹219", image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=800&q=80", description: "Golden crunchy fried baby corn." },
+    { name: "Gobi Manchurian", category: "starters", price: "₹199", image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80", description: "Classic Indo-Chinese cauliflower bites." },
+    { name: "Gobi 65", category: "starters", price: "₹199", image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=800&q=80", description: "Deep-fried spiced spicy cauliflower 65." },
+
+    // PAGE 2: NON VEG STARTERS
+    { name: "Chicken 65", category: "starters", price: "₹259", image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80", description: "Classic hot & spicy fried chicken starter." },
+    { name: "Chilli Chicken", category: "starters", price: "₹259", image: "https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=800&q=80", description: "Chicken tossed with green chillies & bell peppers." },
+    { name: "Chicken Manchurian", category: "starters", price: "₹259", image: "https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?auto=format&fit=crop&w=800&q=80", description: "Juicy fried chicken in Manchurian sauce." },
+    { name: "Chicken Majestic", category: "starters", price: "₹279", image: "https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=800&q=80", description: "Hyderabadi style spicy creamy chicken strips." },
+    { name: "Dragon Chicken", category: "starters", price: "₹279", image: "https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=800&q=80", description: "Sweet & spicy tangy dragon chicken." },
+    { name: "Pepper Chicken (Dry)", category: "starters", price: "₹259", image: "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=800&q=80", description: "Black pepper marinated chicken fry." },
+    { name: "Chicken Lollipop (Wet / Dry)", category: "starters", price: "₹289 / ₹279", image: "https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=800&q=80", description: "Crispy fried winglets served with dip." },
+    { name: "Chicken Wings (Wet / Dry)", category: "starters", price: "₹289 / ₹279", image: "https://images.unsplash.com/photo-1569691899455-88464f6d3ab1?auto=format&fit=crop&w=800&q=80", description: "Spicy tossed chicken wings." },
+    { name: "Chilli Prawns", category: "starters", price: "₹329", image: "https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=800&q=80", description: "Juicy prawns tossed in chilli garlic sauce." },
+    { name: "Loose Prawns", category: "starters", price: "₹319", image: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?auto=format&fit=crop&w=800&q=80", description: "Crispy batter fried seasoned prawns." },
+    { name: "Garlic Prawns", category: "starters", price: "₹319", image: "https://images.unsplash.com/photo-1535400255456-984241443b29?auto=format&fit=crop&w=800&q=80", description: "Sauteed prawns in garlic butter sauce." },
+    { name: "Chilli Egg", category: "starters", price: "₹189", image: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80", description: "Boiled egg chunks tossed with chillies." },
+    { name: "Ulavacharu Wings (Wet)", category: "starters", price: "₹299", image: "https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=800&q=80", description: "Chicken wings infused with Ulavacharu sauce." },
+    { name: "Lemon Chicken", category: "starters", price: "₹269", image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=800&q=80", description: "Tangy lemon flavoured pan-fried chicken." },
+    { name: "Chicken 555", category: "starters", price: "₹269", image: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80", description: "Spicy marinated chicken finger stir fry." },
+
+    // PAGE 3: VEG BIRYANI
+    { name: "Veg Biryani", category: "biryani", price: "₹239", image: "https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=800&q=80", description: "Aromatic biryani rice with veggies (Only Saturday)." },
+    { name: "SP Veg Biryani", category: "biryani", price: "₹319", image: "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=800&q=80", description: "Chef special rich vegetable biryani." },
+    { name: "Paneer Biryani", category: "biryani", price: "₹289", image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80", description: "Biryani layered with marinated paneer." },
+    { name: "Mushroom Biryani", category: "biryani", price: "₹249", image: "https://images.unsplash.com/photo-1604908177453-7462950a6a3b?auto=format&fit=crop&w=800&q=80", description: "Fragrant rice layered with spicy mushrooms." },
+    { name: "Kaju Biryani", category: "biryani", price: "₹299", image: "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=800&q=80", description: "Rich roasted cashew nut biryani." },
+    { name: "Kaju Paneer Biryani", category: "biryani", price: "₹289", image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=800&q=80", description: "Cashews and soft paneer in aromatic biryani." },
+    { name: "Kaju Mushroom Biryani", category: "biryani", price: "₹289", image: "https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=800&q=80", description: "Cashews and fresh mushrooms layered biryani." },
+    { name: "Ulavacharu Veg Biryani", category: "biryani", price: "₹289", image: "https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=800&q=80", description: "Traditional horsegram extract veg biryani." },
+    { name: "Veg Biryani Family Pack", category: "biryani", price: "₹749", image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=800&q=80", description: "Generous family pack veg biryani." },
+
+    // PAGE 3: NON VEG BIRYANI
+    { name: "Chicken Dum Biryani (Full / Half)", category: "biryani", price: "₹289 / ₹219", image: "https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=800&q=80", description: "Authentic Hyderabadi chicken dum biryani." },
+    { name: "Chicken Fry Biryani (Full / Half)", category: "biryani", price: "₹299 / ₹219", image: "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?auto=format&fit=crop&w=800&q=80", description: "Biryani rice topped with spicy chicken fry." },
+    { name: "Moghalai Biryani (Curry / Fry)", category: "biryani", price: "₹369 / ₹379", image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=800&q=80", description: "Rich Moghalai style spiced chicken biryani." },
+    { name: "Ulavacharu Mutton Biryani", category: "biryani", price: "₹439", image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80", description: "Horsegram extract infused mutton biryani." },
+    { name: "Ulavacharu Fry Biryani", category: "biryani", price: "₹319", image: "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?auto=format&fit=crop&w=800&q=80", description: "Ulavacharu sauce infused fry chicken biryani." },
+    { name: "Mutton Fry Biryani", category: "biryani", price: "₹429", image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80", description: "Biryani topped with tender mutton fry." },
+    { name: "Prawns Fry Biryani", category: "biryani", price: "₹349", image: "https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=800&q=80", description: "Spiced prawns fry served over biryani rice." },
+    { name: "Mixed Biryani", category: "biryani", price: "₹449", image: "https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=800&q=80", description: "Mixed biryani with chicken, mutton & prawns." },
+    { name: "Egg Biryani", category: "biryani", price: "₹249", image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80", description: "Biryani rice cooked with boiled eggs." },
+    { name: "Biryani Rice Bowl", category: "biryani", price: "₹149", image: "https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=800&q=80", description: "Flavorful plain biryani rice bowl." },
+
+    // PAGE 3: FAMILY PACK BIRYANI
+    { name: "Dum Biryani Family Pack", category: "biryani", price: "₹989", image: "https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=800&q=80", description: "Large family pack chicken dum biryani." },
+    { name: "Mutton Biryani Family Pack", category: "biryani", price: "₹1249", image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80", description: "Large family pack tender mutton biryani." },
+    { name: "Fry Biryani Family Pack", category: "biryani", price: "₹929", image: "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?auto=format&fit=crop&w=800&q=80", description: "Family pack chicken fry biryani." },
+    { name: "Prawns Biryani Family Pack", category: "biryani", price: "₹1119", image: "https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=800&q=80", description: "Large family pack prawns biryani." },
+
+    // PAGE 4: VEG FRIED RICE
+    { name: "Veg Fried Rice", category: "friedrice", price: "₹229", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=800&q=80", description: "Wok-tossed rice with fresh vegetables." },
+    { name: "SP Veg Fried Rice", category: "friedrice", price: "₹319", image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80", description: "Chef's special loaded veg fried rice." },
+    { name: "Jeera Rice", category: "friedrice", price: "₹219", image: "https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?auto=format&fit=crop&w=800&q=80", description: "Basmati rice tempered with cumin & ghee." },
+    { name: "Gobi Fried Rice", category: "friedrice", price: "₹229", image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80", description: "Fried rice tossed with crispy cauliflower." },
+    { name: "Paneer Fried Rice", category: "friedrice", price: "₹249", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=800&q=80", description: "Wok-fried rice with seasoned paneer." },
+    { name: "Mushroom Fried Rice", category: "friedrice", price: "₹239", image: "https://images.unsplash.com/photo-1618449840665-9ed506d73a34?auto=format&fit=crop&w=800&q=80", description: "Stir-fried rice with fresh mushrooms." },
+    { name: "Kaju Fried Rice", category: "friedrice", price: "₹269", image: "https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?auto=format&fit=crop&w=800&q=80", description: "Rich fried rice with roasted cashews." },
+    { name: "Kaju Paneer Fried Rice", category: "friedrice", price: "₹299", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=800&q=80", description: "Fried rice with cashews and paneer." },
+    { name: "Kaju Mushroom Fried Rice", category: "friedrice", price: "₹279", image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80", description: "Fried rice loaded with cashews & mushrooms." },
+
+    // PAGE 4: NON VEG FRIED RICE
+    { name: "Egg Fried Rice", category: "friedrice", price: "₹239", image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80", description: "Classic stir-fried rice with scrambled eggs." },
+    { name: "Chicken Fried Rice", category: "friedrice", price: "₹259", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=800&q=80", description: "Popular wok-fried rice with tender chicken." },
+    { name: "Chicken Fry Piece Fried Rice", category: "friedrice", price: "₹289", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=800&q=80", description: "Fried rice topped with chicken fry pieces." },
+    { name: "Prawns Fried Rice", category: "friedrice", price: "₹339", image: "https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=800&q=80", description: "Stir-fried rice tossed with juicy prawns." },
+    { name: "Mixed Fried Rice", category: "friedrice", price: "₹389", image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=800&q=80", description: "Chicken, egg and prawns mixed fried rice." },
+    { name: "SP Chicken Fried Rice", category: "friedrice", price: "₹329", image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80", description: "Chef's special spicy chicken fried rice." },
+
+    // PAGE 5: VEG CURRIES
+    { name: "Paneer Butter Masala", category: "curries", price: "₹249", image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80", description: "Paneer cubes in creamy tomato butter gravy." },
+    { name: "Kaju Paneer Curry", category: "curries", price: "₹269", image: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=800&q=80", description: "Rich cashew and cottage cheese gravy." },
+    { name: "Kadai Paneer", category: "curries", price: "₹259", image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80", description: "Paneer cooked with bell peppers & kadai spices." },
+    { name: "Kaju Tomato", category: "curries", price: "₹249", image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80", description: "Cashews cooked in tangy spicy tomato gravy." },
+    { name: "Kaju Masala", category: "curries", price: "₹279", image: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=800&q=80", description: "Rich roasted cashew nut curry." },
+    { name: "Kaju Mushroom", category: "curries", price: "₹269", image: "https://images.unsplash.com/photo-1604908177453-7462950a6a3b?auto=format&fit=crop&w=800&q=80", description: "Cashews and mushrooms in rich gravy." },
+    { name: "Mushroom Curry", category: "curries", price: "₹239", image: "https://images.unsplash.com/photo-1604908177453-7462950a6a3b?auto=format&fit=crop&w=800&q=80", description: "Tender mushrooms in spicy gravy." },
+    { name: "Kadai Mushroom", category: "curries", price: "₹249", image: "https://images.unsplash.com/photo-1604908177453-7462950a6a3b?auto=format&fit=crop&w=800&q=80", description: "Mushrooms cooked with crushed spices." },
+    { name: "Mixed Veg Curry", category: "curries", price: "₹249", image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80", description: "Seasonal garden vegetables in gravy." },
+    { name: "Methi Chaman", category: "curries", price: "₹249", image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80", description: "Creamy spinach and fenugreek paneer curry." },
+    { name: "Dal Fry", category: "curries", price: "₹149", image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80", description: "Yellow lentils tempered with aromatic spices." },
+    { name: "Dal Tadka", category: "curries", price: "₹159", image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80", description: "Lentils topped with garlic chilli tadka." },
+
+    // PAGE 1 & 5: NON VEG CURRIES
+    { name: "Chicken Curry", category: "curries", price: "₹239", image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80", description: "Traditional homestyle chicken curry." },
+    { name: "Chicken Fry", category: "curries", price: "₹229", image: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80", description: "Spicy pan-roasted chicken fry." },
+    { name: "Prawns Curry", category: "curries", price: "₹299", image: "https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=800&q=80", description: "Prawns cooked in authentic spicy gravy." },
+    { name: "Prawns Fry", category: "curries", price: "₹279", image: "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?auto=format&fit=crop&w=800&q=80", description: "Spicy dry roasted prawns fry." },
+    { name: "Mutton Curry", category: "curries", price: "₹349", image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80", description: "Slow-cooked tender mutton gravy." },
+    { name: "Mutton Fry", category: "curries", price: "₹319", image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80", description: "Spicy roasted dry mutton fry." },
+    { name: "Chicken Ghee Roast", category: "curries", price: "₹269", image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80", description: "Chicken roast cooked in pure desi ghee." },
+    { name: "Mutton Ghee Roast", category: "curries", price: "₹319", image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80", description: "Mutton roast cooked in pure desi ghee." },
+    { name: "Mutton Pepper Fry", category: "curries", price: "₹319", image: "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=800&q=80", description: "Mutton fry with freshly ground black pepper." },
+    { name: "Chicken Pepper Fry", category: "curries", price: "₹219", image: "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=800&q=80", description: "Chicken fry with black pepper seasoning." },
+    { name: "Gongura Chicken Curry", category: "curries", price: "₹299", image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80", description: "Tangy sorrel leaves chicken curry." },
+    { name: "Gongura Mutton Curry", category: "curries", price: "₹329", image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80", description: "Sorrel leaves cooked with tender mutton." },
+    { name: "Gongura Prawns", category: "curries", price: "₹329", image: "https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=800&q=80", description: "Juicy prawns in tangy Gongura gravy." },
+    { name: "Punjabi Chicken", category: "curries", price: "₹269", image: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=800&q=80", description: "Rich Punjabi style chicken curry." },
+    { name: "Kadai Chicken", category: "curries", price: "₹279", image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80", description: "Chicken cooked with coriander & capsicum." },
+    { name: "Kaju Chicken", category: "curries", price: "₹289", image: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=800&q=80", description: "Chicken curry enriched with cashews." },
+    { name: "Moghlai Chicken", category: "curries", price: "₹269", image: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=800&q=80", description: "Creamy rich Moghlai chicken curry." },
+    { name: "Boneless Chicken Curry", category: "curries", price: "₹259", image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80", description: "Boneless chicken pieces in spicy gravy." },
+    { name: "Nellore Chicken", category: "curries", price: "₹279", image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80", description: "Spicy authentic Nellore chicken gravy." },
+    { name: "Butter Chicken", category: "curries", price: "₹289", image: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=800&q=80", description: "Creamy tomato butter chicken gravy." },
+    { name: "Egg Masala", category: "curries", price: "₹199", image: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80", description: "Boiled eggs in spiced onion tomato gravy." },
+    { name: "Egg Burji", category: "curries", price: "₹149", image: "https://images.unsplash.com/photo-1510693206972-df098062cb71?auto=format&fit=crop&w=800&q=80", description: "Indian style spiced scrambled eggs." },
+    { name: "Anda Keema", category: "curries", price: "₹159", image: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80", description: "Grated spiced egg keema curry." },
+
+    // PAGE 5: ROTI
+    { name: "Pulka", category: "curries", price: "₹10", image: "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=800&q=80", description: "Soft fluffy whole wheat pulka." }
+];
+
+let currentCategory = "all";
+
+const menuGrid = document.getElementById("menuGrid");
+const searchInput = document.getElementById("search");
+const categoryButtons = document.querySelectorAll(".menu-controls button");
+
+function renderMenu() {
+    const search = searchInput.value.trim().toLowerCase();
+
+    const filtered = foods.filter(food => {
+        const matchesCategory = currentCategory === "all" || food.category === currentCategory;
+        const matchesSearch = food.name.toLowerCase().includes(search);
+        return matchesCategory && matchesSearch;
+    });
+
+    if (filtered.length === 0) {
+        menuGrid.innerHTML = '<p style="text-align:center; grid-column: 1/-1;">No food items found matching your search.</p>';
+        return;
+    }
+
+    menuGrid.innerHTML = filtered.map(food => `
+        <div class="food-card">
+            <img src="${food.image}" alt="${food.name}" loading="lazy">
+            <div class="food-info">
+                <h3>${food.name}</h3>
+                <p>${food.description}</p>
+                <div class="price">${food.price}</div>
+            </div>
+        </div>
+    `).join("");
+}
+
+categoryButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        currentCategory = button.dataset.category;
+        categoryButtons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+        renderMenu();
+    });
+});
+
+searchInput.addEventListener("input", renderMenu);
+
+// Initial Menu Render
+renderMenu();
+</script>
+
+</body>
+</html>
